@@ -20,7 +20,7 @@ def test_label_matrix_from_edge_list(data):
     assert matrix.ncols == node_count and matrix.nrows == node_count
     assert matrix.gb_type == grb.Matrix.sparse(label_type).gb_type
 
-    for (source, label, destination) in edge_list:
+    for source, label, destination in edge_list:
         if label is not None:
             assert matrix[source, destination] == label
         else:
@@ -39,5 +39,5 @@ def test_adjacency_matrix_from_edge_list(data):
     assert matrix.ncols == node_count and matrix.nrows == node_count
     assert matrix.gb_type == grb.Matrix.sparse(preferred_type).gb_type
 
-    for (source, destination) in edge_list:
+    for source, destination in edge_list:
         assert matrix[source, destination] == 1

@@ -76,7 +76,7 @@ def label_matrix_from_edge_list(
     assert label_type in _GRAPHBLAS_ELEMENT_TYPES
 
     matrix = grb.Matrix.sparse(label_type, nrows=node_count, ncols=node_count)
-    for (source, label, destination) in edge_list:
+    for source, label, destination in edge_list:
         if label is not None:
             matrix[source, destination] = label
         else:
