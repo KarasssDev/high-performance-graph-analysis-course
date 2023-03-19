@@ -13,6 +13,9 @@ def load_from_file(file_name: str):
 
 resources = {
     "test_bfs_shortest_path_data": load_from_file("test_bfs_shortest_path_data"),
+    "test_bfs_multiple_source_parents_data": load_from_file(
+        "test_bfs_multiple_source_parents_data"
+    ),
     "test_label_matrix_from_edge_list_data": [
         {
             "name": "Empty graph",

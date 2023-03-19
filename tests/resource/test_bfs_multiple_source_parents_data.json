@@ -1,0 +1,124 @@
+[
+  {
+    "name": "One node",
+    "node_count": 1,
+    "start_nodes": [0],
+    "edge_list": [],
+    "expected": [[0, [-1]]]
+  },
+  {
+    "name": "Without edges one start",
+    "node_count": 2,
+    "start_nodes": [0],
+    "edge_list": [],
+    "expected": [[0, [-1, -2]]]
+  },
+  {
+    "name": "Loop",
+    "node_count": 1,
+    "start_nodes": [0],
+    "edge_list": [[0, 0]],
+    "expected": [[0, [-1]]]
+  },
+  {
+    "name": "Bamboo one start",
+    "node_count": 4,
+    "start_nodes": [0],
+    "edge_list": [[0, 1], [1, 2], [2, 3]],
+    "expected": [[0, [-1, 0, 1, 2]]]
+  },
+  {
+    "name": "Cycle one start",
+    "node_count": 3,
+    "start_nodes": [0],
+    "edge_list": [[0, 1], [1, 2], [2, 1]],
+    "expected": [[0, [-1, 0, 1]]]
+  },
+  {
+    "name": "Tree one start",
+    "node_count": 7,
+    "start_nodes": [0],
+    "edge_list": [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]],
+    "expected": [[0, [-1, 0, 0, 1, 1, 2, 2]]]
+  },
+  {
+    "name": "Complete graph one start",
+    "node_count": 3,
+    "start_nodes": [0],
+    "edge_list": [
+      [0, 0], [0, 1], [0, 2],
+      [1, 0], [1, 1], [1, 2],
+      [2, 0], [2, 1], [2, 2]
+    ],
+    "expected": [[0, [-1, 0, 0]]]
+  },
+
+  {
+    "name": "Without edges two start",
+    "node_count": 2,
+    "start_nodes": [0, 1],
+    "edge_list": [],
+    "expected": [
+      [0, [-1, -2]],
+      [1, [-2, -1]]
+    ]
+  },
+  {
+    "name": "Bamboo two start",
+    "node_count": 4,
+    "start_nodes": [0, 1],
+    "edge_list": [[0, 1], [1, 2], [2, 3]],
+    "expected": [
+      [0, [-1, 0, 1, 2]],
+      [1, [-2, -1, 1, 2]]
+    ]
+  },
+  {
+    "name": "Bamboo all start",
+    "node_count": 4,
+    "start_nodes": [0, 1, 2, 3],
+    "edge_list": [[0, 1], [1, 2], [2, 3]],
+    "expected": [
+      [0, [-1, 0, 1, 2]],
+      [1, [-2, -1, 1, 2]],
+      [2, [-2, -2, -1, 2]],
+      [3, [-2, -2, -2, -1]]
+    ]
+  },
+  {
+    "name": "Cycle all start",
+    "node_count": 3,
+    "start_nodes": [0, 1, 2],
+    "edge_list": [[0, 1], [1, 2], [2, 1]],
+    "expected": [
+      [0, [-1, 0, 1]],
+      [1, [-2, -1, 1]],
+      [2, [-2, 2, -1]]
+    ]
+  },
+  {
+    "name": "Tree two started",
+    "node_count": 7,
+    "start_nodes": [1, 2],
+    "edge_list": [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]],
+    "expected": [
+      [1, [-2, -1, -2, 1, 1, -2, -2]],
+      [2, [-2, -2, -1, -2, -2, 2, 2]]
+    ]
+  },
+  {
+    "name": "Complete graph all started",
+    "node_count": 3,
+    "start_nodes": [0, 1, 2],
+    "edge_list": [
+      [0, 0], [0, 1], [0, 2],
+      [1, 0], [1, 1], [1, 2],
+      [2, 0], [2, 1], [2, 2]
+    ],
+    "expected": [
+      [0, [-1, 0, 0]],
+      [1, [1, -1, 1]],
+      [2, [2, 2, -1]]
+    ]
+  }
+]

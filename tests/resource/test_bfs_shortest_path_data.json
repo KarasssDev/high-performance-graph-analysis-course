@@ -36,7 +36,7 @@
     "expected": [0, 1, 1, 2, 2, 2, 2]
   },
   {
-    "name": "Tree",
+    "name": "Complete graph",
     "node_count": 3,
     "edge_list": [
       [0, 0], [0, 1], [0, 2],
