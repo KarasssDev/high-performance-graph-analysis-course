@@ -38,8 +38,7 @@ def _test_adjacency_matrix_from_edge_list(data, validate_function):
     assert matrix.ncols == node_count and matrix.nrows == node_count
     assert matrix.gb_type == grb.Matrix.sparse(preferred_type).gb_type
 
-    for source, destination in edge_list:
-        assert matrix[source, destination] == 1
+    validate_function(matrix, edge_list)
 
 
 def test_adjacency_matrix_from_edge_list(data):
