@@ -22,6 +22,33 @@ _GRAPHBLAS_ELEMENT_TYPES: List[type] = [
 ]
 
 
+def undirected_adjacency_matrix_from_edge_list(
+    node_count: int,
+    adjacency_list: List[Tuple[int, int]],
+    preferred_type: type = grb.UINT8,
+) -> grb.Matrix:
+    """
+
+    Parameters
+    ----------
+    node_count: int
+        Count of nodes in graph
+    adjacency_list: List[Tuple[int, int]]
+        List of edges with elements like (source, destination)
+    preferred_type:
+        GraphBLAS type of matrix elements
+
+    Returns
+    -------
+    Matrix
+        Undirected graph adjacency matrix
+    """
+    edge_list: List[Tuple[int, bool, int]] = [
+        (source, True, destination) for (source, destination) in adjacency_list
+    ] + [(destination, True, source) for (source, destination) in adjacency_list]
+    return label_matrix_from_edge_list(node_count, edge_list, preferred_type)
+
+
 def adjacency_matrix_from_edge_list(
     node_count: int,
     adjacency_list: List[Tuple[int, int]],
