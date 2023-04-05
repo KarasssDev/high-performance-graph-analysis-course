@@ -1,6 +1,12 @@
 import pygraphblas as grb
 from typing import List, Tuple
 
+__all__ = [
+    "count_triangles_for_each_vertex",
+    "count_triangles_cohen",
+    "count_triangles_sandia",
+]
+
 
 def count_triangles_for_each_vertex(matrix: grb.Matrix) -> List[int]:
     """
