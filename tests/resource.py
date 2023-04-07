@@ -99,16 +99,14 @@ test_label_matrix_from_edge_list_data = [
 test_count_triangles_data = load_from_file("test_count_triangles_data")
 
 resources = {
-    "test_bfs_shortest_path_data": load_from_file("test_bfs_shortest_path_data"),
-    "test_bfs_multiple_source_parents_data": load_from_file(
-        "test_bfs_multiple_source_parents_data"
-    ),
     "test_label_matrix_from_edge_list_data": test_label_matrix_from_edge_list_data,
     "test_adjacency_matrix_from_edge_list_data": test_adjacency_matrix_from_edge_list_data,
     "test_undirected_adjacency_matrix_from_edge_list_data": test_adjacency_matrix_from_edge_list_data,
     "test_count_triangles_cohen_data": test_count_triangles_data,
     "test_count_triangles_sandia_data": test_count_triangles_data,
-    "test_count_triangles_for_each_vertex_data": load_from_file(
-        "test_count_triangles_for_each_vertex_data"
-    ),
 }
+
+
+def get_data(name: str):
+    data = resources.get(name)
+    return data if data is not None else load_from_file(name)
