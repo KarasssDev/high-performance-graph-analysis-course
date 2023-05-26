@@ -64,7 +64,7 @@ def test_shortest_path_dijkstra(data):
     graph: nx.Graph = nx.DiGraph()
     graph.add_weighted_edges_from(edge_list)
 
-    actual: dict[Hashable, float] = shortest_path.shortest_path_dijkstra(graph, 0)
+    actual: Dict[Hashable, float] = shortest_path.shortest_path_dijkstra(graph, 0)
 
     for vertex, expected_distance in enumerate(expected):
         assert expected_distance == actual[vertex]

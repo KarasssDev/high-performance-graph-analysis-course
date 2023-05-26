@@ -1,4 +1,4 @@
-from typing import Tuple, List, Hashable
+from typing import Tuple, List, Hashable, Dict
 
 import utils
 import networkx as nx
@@ -13,7 +13,7 @@ def test_dynamic_shortest_path(data):
     graph.add_weighted_edges_from(init_edge_list)
     dynamic_sssp = DynamicSSSP(graph, 0)
 
-    actual: dict[Hashable, float] = dynamic_sssp.query_dists()
+    actual: Dict[Hashable, float] = dynamic_sssp.query_dists()
     for v, expected_distance in enumerate(init_expected):
         assert expected_distance == actual[v]
 
@@ -26,6 +26,6 @@ def test_dynamic_shortest_path(data):
                 dynamic_sssp.delete_edge(u, v)
 
         expected: List[float] = utils._to_float_inf(update["expected"])
-        actual: dict[Hashable, float] = dynamic_sssp.query_dists()
+        actual: Dict[Hashable, float] = dynamic_sssp.query_dists()
         for v, expected_distance in enumerate(expected):
             assert expected_distance == actual[v]

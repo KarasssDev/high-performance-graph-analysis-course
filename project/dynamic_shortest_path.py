@@ -2,7 +2,7 @@ import heapq
 from dataclasses import dataclass, field
 
 from project.shortest_path import shortest_path_dijkstra
-from typing import Hashable, Any
+from typing import Hashable, Any, Dict, List
 import networkx as nx
 
 __all__ = ["DynamicSSSP"]
@@ -23,7 +23,7 @@ class PriorityQueue:
     REMOVED = None
 
     def __init__(self) -> None:
-        self._queue: list[PrioritizedItem] = []
+        self._queue: List[PrioritizedItem] = []
         self._item_map = {}
         self._lazy_removed_count = 0
 
@@ -103,7 +103,7 @@ class DynamicSSSP:
     def __init__(self, graph: nx.DiGraph, start: Hashable):
         self._graph: nx.DiGraph = graph
         self._start: Hashable = start
-        self._dists: dict[Hashable, float] = shortest_path_dijkstra(graph, start)
+        self._dists: Dict[Hashable, float] = shortest_path_dijkstra(graph, start)
         self._modified_vertices: set[Hashable] = set()
 
     def insert_edge(self, u: Hashable, v: Hashable, weight: float = 1) -> None:
@@ -137,11 +137,11 @@ class DynamicSSSP:
         self._graph.remove_edge(u, v)
         self._modified_vertices.add(v)
 
-    def query_dists(self) -> dict[Hashable, float]:
+    def query_dists(self) -> Dict[Hashable, float]:
         """
         Returns
         -------
-        dict[Hashable, float]
+        Dict[Hashable, float]
             Distances from start vertex to others.
             Distance will be float('inf') if vertex unreachable.
         """
@@ -161,7 +161,7 @@ class DynamicSSSP:
         """
         Applies the accumulated graph updates to the stored distances
         """
-        rhs: dict[Hashable, float] = {}
+        rhs: Dict[Hashable, float] = {}
         queue = PriorityQueue()
 
         def push(vertex):

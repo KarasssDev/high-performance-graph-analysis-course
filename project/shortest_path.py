@@ -1,7 +1,7 @@
 import pygraphblas as grb
 import heapq
 import networkx as nx
-from typing import List, Tuple, Hashable
+from typing import List, Tuple, Hashable, Dict
 
 __all__ = [
     "multi_source_shortest_path_bellman_ford",
@@ -97,7 +97,7 @@ def shortest_path_floyd_warshall(matrix: grb.Matrix) -> List[Tuple[int, List[flo
     return [(i, list(distances[i].vals)) for i in range(num_vertices)]
 
 
-def shortest_path_dijkstra(graph: nx.Graph, start: Hashable) -> dict[Hashable, float]:
+def shortest_path_dijkstra(graph: nx.Graph, start: Hashable) -> Dict[Hashable, float]:
     """
     Parameters
     ----------
@@ -108,7 +108,7 @@ def shortest_path_dijkstra(graph: nx.Graph, start: Hashable) -> dict[Hashable, f
         Start vertex
     Returns
     -------
-    dict[Hashable, float]
+    Dict[Hashable, float]
         Distances from start vertex to others.
         Distance will be float('inf') if vertex unreachable.
     """
