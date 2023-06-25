@@ -1,10 +1,13 @@
 import pygraphblas as grb
-from typing import List, Tuple
+import heapq
+import networkx as nx
+from typing import List, Tuple, Hashable, Dict
 
 __all__ = [
     "multi_source_shortest_path_bellman_ford",
     "single_source_shortest_path_bellman_ford",
     "shortest_path_floyd_warshall",
+    "shortest_path_dijkstra",
 ]
 
 
@@ -56,7 +59,7 @@ def single_source_shortest_path_bellman_ford(
         Index of start vertex
     Returns
     -------
-    List[Tuple[int, List[float]]]
+    List[float]
         Distances from start vertex to others.
         Distance will be float('inf') if vertex unreachable.
     """
@@ -72,7 +75,7 @@ def shortest_path_floyd_warshall(matrix: grb.Matrix) -> List[Tuple[int, List[flo
         Weighted graph adjacency matrix
     Returns
     -------
-    List[float]
+    List[Tuple[int, List[float]]]
         Distances from each vertex to others.
         Distance will be float('inf') if vertex unreachable.
     """
@@ -92,3 +95,39 @@ def shortest_path_floyd_warshall(matrix: grb.Matrix) -> List[Tuple[int, List[flo
         float("inf"), mask=distances, desc=grb.descriptor.C & grb.descriptor.S
     )
     return [(i, list(distances[i].vals)) for i in range(num_vertices)]
+
+
+def shortest_path_dijkstra(graph: nx.Graph, start: Hashable) -> Dict[Hashable, float]:
+    """
+    Parameters
+    ----------
+    graph: Graph
+        Weighted graph
+
+    start: int
+        Start vertex
+    Returns
+    -------
+    Dict[Hashable, float]
+        Distances from start vertex to others.
+        Distance will be float('inf') if vertex unreachable.
+    """
+    distances = {node: float("inf") for node in graph.nodes}
+    distances[start] = 0
+
+    queue = [(0, start)]
+
+    while len(queue) != 0:
+        distance, node = heapq.heappop(queue)
+
+        if distance > distances[node]:
+            continue
+
+        for neighbor in graph.neighbors(node):
+            new_distance = distances[node] + graph[node][neighbor]["weight"]
+
+            if new_distance < distances[neighbor]:
+                distances[neighbor] = new_distance
+                heapq.heappush(queue, (new_distance, neighbor))
+
+    return distances

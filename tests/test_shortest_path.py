@@ -1,17 +1,10 @@
-from typing import List, Tuple
+from typing import List, Tuple, Hashable
 
+import utils
+import networkx as nx
 import pygraphblas as grb
 from project import graphblas_utils
 from project import shortest_path
-
-
-def _to_float_inf(lst: List[float]):
-    def to_inf(x):
-        if x == "inf":
-            return float("inf")
-        return x
-
-    return list(map(to_inf, lst))
 
 
 def assert_distance_equals(
@@ -35,7 +28,7 @@ def test_multi_source_shortest_path_bellman_ford(data):
     starts: List[int] = data["starts"]
     edge_list: List[Tuple[int, float, int]] = data["edge_list"]
     expected: List[Tuple[int, List[float]]] = [
-        (v, _to_float_inf(d)) for [v, d] in data["expected"]
+        (v, utils._to_float_inf(d)) for [v, d] in data["expected"]
     ]
     graph: grb.Matrix = graphblas_utils.label_matrix_from_edge_list(
         node_count, edge_list, grb.FP64
@@ -52,7 +45,7 @@ def test_shortest_path_floyd_warshall(data):
     node_count: int = data["node_count"]
     edge_list: List[Tuple[int, float, int]] = data["edge_list"]
     expected: List[Tuple[int, List[float]]] = [
-        (v, _to_float_inf(d)) for [v, d] in data["expected"]
+        (v, utils._to_float_inf(d)) for [v, d] in data["expected"]
     ]
     graph: grb.Matrix = graphblas_utils.label_matrix_from_edge_list(
         node_count, edge_list, grb.FP64
@@ -63,3 +56,15 @@ def test_shortest_path_floyd_warshall(data):
     )
 
     assert_distance_equals(expected, actual)
+
+
+def test_shortest_path_dijkstra(data):
+    edge_list: List[Tuple[int, int, float]] = data["edge_list"]
+    expected: List[float] = utils._to_float_inf(data["expected"])
+    graph: nx.Graph = nx.DiGraph()
+    graph.add_weighted_edges_from(edge_list)
+
+    actual: Dict[Hashable, float] = shortest_path.shortest_path_dijkstra(graph, 0)
+
+    for vertex, expected_distance in enumerate(expected):
+        assert expected_distance == actual[vertex]
